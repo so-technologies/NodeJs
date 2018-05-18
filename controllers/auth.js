@@ -1,11 +1,11 @@
-const express = require('express'),
-  config = require('../config'),
-  jwt = require('jsonwebtoken'),
-  User = require('../models/user');
+const express = require('express');
+const config = require('../config');
+const jwt = require('jsonwebtoken');
+const User = require('../models/user');
 
-var router = express.Router();
+const router = express.Router();
 
-var signIn = (req, res) => {
+const signIn = (req, res) => {
   
   User.findOne({
     email: req.body.email
@@ -14,13 +14,13 @@ var signIn = (req, res) => {
     if (err) throw err;
 
     if (!user) {
-      res.json({ success: false, message: 'Authentication failed. User not found.' })
+      res.json({ success: false, message: 'Authentication failed. User not found.' });
     } else if (user) {
 
       if (user.password != req.body.password) {
         res.json({ success: false, message: 'Authentication failed. Wrong password.' });
       } else {
-        var token = jwt.sign({id: user._id}, config.jwtSecret);
+        const token = jwt.sign({id: user._id}, config.jwtSecret);
         
         res.json({
           success: true,
@@ -34,7 +34,7 @@ var signIn = (req, res) => {
 
 };
 
-var signUp = (req, res) => {
+const signUp = (req, res) => {
   
   User.findOne({
     email: req.body.email
@@ -43,17 +43,17 @@ var signUp = (req, res) => {
     if (err) throw err;
 
     if (user) {
-      res.status(403).json({ success: false, message: 'User with this email address already registered.' })
+      res.status(403).json({ success: false, message: 'User with this email address already registered.' });
     } else {
 
-      var user = new User(req.body);
+      const user = new User(req.body);
 
       user.validate((err) => {
         if (err) {
           res.status(403).json({ success: false, message: err});
         } else {
           user.save();
-          res.json({ success: true});
+          res.json({ success: true });
         }
       });
 

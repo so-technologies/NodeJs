@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "flow": "flow",
     "serve": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,5 +17,11 @@
     "jsonwebtoken": "^8.2.1",
     "mongoose": "^5.1.1",
     "nodemon": "^1.17.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-flow": "^6.23.0",
+    "eslint": "^4.19.1",
+    "flow-bin": "^0.72.0"
   }
 }

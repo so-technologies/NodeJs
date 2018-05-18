@@ -1,12 +1,10 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 module.exports = (dbUri) => {
-  let db;
-
-  db = mongoose.connect(dbUri);
+  const db = mongoose.connect(dbUri);
 
   mongoose.connection.on('error', () => {
-    console.error.bind(console, 'connection error...');
+    console.log('connection error...');
   });
 
   return db;

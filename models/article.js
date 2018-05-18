@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
-  config = require('../config');
+const config = require('../config');
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var ArticleSchema = new Schema({
+const ArticleSchema = new Schema({
   title: {
     type: String,
     required: true
   },
   text: {
-   type: String,
-   required: true 
+    type: String,
+    required: true 
   },
   views_count: {
     type: Number,
@@ -32,6 +32,6 @@ ArticleSchema.statics = {
   }
 };
 
-var Article = mongoose.model('Article', ArticleSchema);
+const Article = mongoose.model('Article', ArticleSchema);
 
 module.exports = Article;

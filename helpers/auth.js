@@ -1,12 +1,12 @@
-const jwt = require('jsonwebtoken'),
-  config = require('../config');
+const jwt = require('jsonwebtoken');
+const config = require('../config');
 
 const auth = (req, res, next) => {
-  let token = req.headers['authorization'],
-      decoded;
+  let decoded;
+  const token = req.headers['authorization']; 
 
   if (!token) {
-      return res.status(403).json({ message: 'No Authorization Provided', status: 403});
+    return res.status(403).json({ message: 'No Authorization Provided', status: 403});
   }
 
   try {
