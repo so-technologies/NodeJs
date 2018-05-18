@@ -5,7 +5,7 @@ const express = require('express'),
 
 var router = express.Router();
 
-var signIn = ((req, res) => {
+var signIn = (req, res) => {
   
   User.findOne({
     email: req.body.email
@@ -32,9 +32,9 @@ var signIn = ((req, res) => {
 
   });
 
-});
+};
 
-var signUp = ((req, res) => {
+var signUp = (req, res) => {
   
   User.findOne({
     email: req.body.email
@@ -48,19 +48,19 @@ var signUp = ((req, res) => {
 
       var user = new User(req.body);
 
-      user.validate(function(err) {
+      user.validate((err) => {
         if (err) {
           res.status(403).json({ success: false, message: err});
         } else {
           user.save();
-          res.json({ 'success': true});
+          res.json({ success: true});
         }
       });
 
     }
   });
   
-});
+};
 
 router.post('/signin', signIn);
 router.post('/signup', signUp);

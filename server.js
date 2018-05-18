@@ -14,7 +14,7 @@ app.use('/', auth);
 app.use('/users', users);
 
 app.all('*', (req, res, next) => {
-  res.status(404).json('Not Found Error');
+  res.status(404).json({ success: false, message: 'Not Found Error' });
 });
 
 app.listen(config.port, () => { console.log(`Listning port ${config.port}...`); });

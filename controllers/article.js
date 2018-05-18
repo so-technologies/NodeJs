@@ -1,14 +1,13 @@
 const express = require('express'),
   config = require('../config'),
-  mongoose = require('mongoose'),
-  User = mongoose.model('User'),
+  Article = require('../models/article'),
   auth = require('../helpers/auth');
 
 var router = express.Router();
 
 router.use(auth);
 
-var getAllUsers = (req, res) => {
+var getAllArticles = ((req, res) => {
   const page = (req.query.page > 0 ? req.query.page : 1) - 1;
   const limit = config.limit;
 
@@ -17,18 +16,11 @@ var getAllUsers = (req, res) => {
     limit: limit,
   }
 
-  User.list(options).then((users) => {
-    res.json(users);
-  });
-};
+  Article.list(options).then((articles) => {
+    res.json(articles);
+  })
+});
 
-var getUser = (req, res) => {
-  User.get(req.params.id).then((user) => {
-    res.json(user);
-  });
-};
-
-router.get('/', getAllUsers);
-router.get('/:id', getUser);
+router.get('/', getAllArticles);
 
 module.exports = router;
