@@ -15,21 +15,32 @@ const ArticleSchema = new Schema({
   views_count: {
     type: Number,
     default: 0
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 }, { timestamp: true });
 
 ArticleSchema.statics = {
+  
+  add: (user) => {
+    Article.create(user);
+  },
+
   list: (options) => {
     const criteria = options.criteria || {};
     const page = options.page || 0;
     const limit = options.limit || config.limit;
-
-    this.find(criteria)
+    
+    return Article.find(criteria)
+      .populate('user', 'firstname lastname')
       .sort({ createdAt: -1 })
       .limit(limit)
       .skip(limit * page)
       .exec(); 
   }
+  
 };
 
 const Article = mongoose.model('Article', ArticleSchema);

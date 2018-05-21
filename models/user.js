@@ -57,15 +57,15 @@ UserSchema.methods.comparePassword = (candidatePassword, cb) => {
 UserSchema.statics = {
 
   add: (user) => {
-    this.create(user);
+    User.create(user);
   },
 
   list: (options) => {
     const criteria = options.criteria || {};
     const page = options.page || 0;
     const limit = options.limit || config.limit;
-
-    return this.find(criteria)
+    
+    return User.find(criteria)
       .sort({ createdAt: -1 })
       .limit(limit)
       .skip(limit * page)
@@ -73,7 +73,7 @@ UserSchema.statics = {
   },
 
   get: (id) => {
-    return this.findById(id)
+    return User.findById(id)
       .exec();
   }
 };
