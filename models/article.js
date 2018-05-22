@@ -23,12 +23,8 @@ const ArticleSchema = new Schema({
 }, { timestamp: true });
 
 ArticleSchema.statics = {
-  
-  add: (user) => {
-    Article.create(user);
-  },
 
-  list: (options) => {
+  getAllArticles: (options) => {
     const criteria = options.criteria || {};
     const page = options.page || 0;
     const limit = options.limit || config.limit;
@@ -39,8 +35,23 @@ ArticleSchema.statics = {
       .limit(limit)
       .skip(limit * page)
       .exec(); 
-  }
+  },
+
+  getArticleById: (id) => {
+    return Article.findById(id)
+      .populate('user', 'firstname lastname')
+      .exec();
+  },
   
+  updateArticle: (id, updates) => {
+    return Article.findByIdAndUpdate(id, updates, { new: true }).exec();
+  },
+
+  deleteArticle: (id) => {
+    return Article.findByIdAndRemove(id).exec().then(() => {
+      throw new Error('Test error');
+    });
+  },
 };
 
 const Article = mongoose.model('Article', ArticleSchema);

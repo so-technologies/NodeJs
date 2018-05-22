@@ -14,15 +14,15 @@ const signIn = (req, res) => {
     if (err) throw err;
 
     if (!user) {
-      res.json({ success: false, message: 'Authentication failed. User not found.' });
+      return res.json({ success: false, message: 'Authentication failed. User not found.' });
     } else if (user) {
 
       if (user.password != req.body.password) {
-        res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+        return res.json({ success: false, message: 'Authentication failed. Wrong password.' });
       } else {
         const token = jwt.sign({id: user._id}, config.jwtSecret);
         
-        res.json({
+        return res.json({
           success: true,
           token: token
         });
@@ -43,17 +43,17 @@ const signUp = (req, res) => {
     if (err) throw err;
 
     if (user) {
-      res.status(403).json({ success: false, message: 'User with this email address already registered.' });
+      return res.status(403).json({ success: false, message: 'User with this email address already registered.' });
     } else {
 
       const user = new User(req.body);
 
       user.validate((err) => {
         if (err) {
-          res.status(403).json({ success: false, message: err});
+          return res.status(403).json({ success: false, message: err});
         } else {
           user.save();
-          res.json({ success: true });
+          return res.json({ success: true });
         }
       });
 

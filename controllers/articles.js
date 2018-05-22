@@ -13,8 +13,8 @@ const getAllArticles = (req, res) => {
     limit
   };
 
-  Article.list(options).then((articles) => {
-    res.json(articles);
+  Article.getAllArticles(options).then((articles) => {
+    res.json({ articles });
   });
 };
 
@@ -27,13 +27,35 @@ const addArticle = (req, res) => {
       res.status(403).json({ success: false, message: err });
     } else {
       article.save();
-      res.json({ success: true });
+      return res.json({ success: true });
     }
     
   });
 };
 
+const getArticle = (req, res) => {
+  Article.getArticleById(req.params.id).then((article) => {
+    return res.json({ article });
+  });
+};
+
+const updateArticle = (req, res) => {
+  Article.updateArticle(req.params.id, req.body).then((article) => {
+    return res.json({ article });
+  });
+};
+
+const deleteArticle = (req, res) => {
+  Article.deleteArticle(req.params.id)
+    .then(() => {
+      return res.json({ success: true });
+    });
+};
+
 router.get('/', getAllArticles);
+router.get('/:id', getArticle);
 router.post('/', auth, addArticle);
+router.put('/:id', auth, updateArticle);
+router.delete('/:id', auth, deleteArticle);
 
 module.exports = router;

@@ -18,13 +18,13 @@ const getAllUsers = (req, res) => {
   };
 
   User.list(options).then((users) => {
-    res.json(users);
+    return res.json(users);
   });
 };
 
 const getUser = (req, res) => {
   User.get(req.params.id).then((user) => {
-    res.json(user);
+    return res.json(user);
   });
 };
 

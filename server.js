@@ -15,7 +15,7 @@ app.use('/users', users);
 app.use('/articles', articles);
 
 app.all('*', (req, res) => {
-  res.status(404).json({ success: false, message: 'Not Found Error' });
+  return res.status(404).json({ success: false, message: 'Not Found Error' });
 });
 
 app.listen(config.port, () => { console.log(`Listning port ${config.port}...`); });
